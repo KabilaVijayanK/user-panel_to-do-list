@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { X, Calendar, Clock, AlignLeft, Search, Tag, Flag } from 'lucide-react';
 import { useTasks } from '../hooks/useTasks';
-import DatePickerCalendar from './DatePickerCalendar';
 
 interface AddTaskModalProps {
   isOpen: boolean;
@@ -41,10 +40,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, onAdd }) =
     }
   }, [isOpen]);
 
-  const handleDateSelect = (date: Date) => {
-    const dateStr = date.toISOString().split('T')[0];
-    setDueDate(dateStr);
-  };
+  // Note: calendar removed from modal; due date remains editable via the date input above.
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,9 +90,9 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, onAdd }) =
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5 overflow-y-auto flex-1">
           {/* Main form layout with calendar on the right */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left column: form fields */}
-            <div className="lg:col-span-2 space-y-5">
+          <div className="grid grid-cols-1 gap-6">
+            {/* Form fields (full width) */}
+            <div className="space-y-5">
           {/* Search existing tasks */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2 text-gray-800">Search Tasks</label>
@@ -237,11 +233,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, onAdd }) =
               />
             </div>
           </div>
-            </div>
-
-            {/* Right column: Calendar widget */}
-            <div className="lg:col-span-1 lg:row-span-2">
-              <DatePickerCalendar selectedDate={dueDate} onDateSelect={handleDateSelect} />
             </div>
           </div>
 
